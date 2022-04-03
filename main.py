@@ -1,7 +1,8 @@
 from solution import *
 
-WHITE=1
-BLACK=2
+# Я амогус
+WHITE = 1
+BLACK = 2
 
 row0 = 4
 col0 = 5
