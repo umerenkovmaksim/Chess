@@ -138,20 +138,33 @@ class Board:
                 if row == row1:
                     for i in range(col + 1, col1 + 1):
                         if self.cell(row, i) != '  ':
-                            return False
+                            if self.cell(row1, col1)[0] == 'w':
+                                return False
+                            else:
+                                self.field[row1][col1] = None
                 if col == col1:
                     for i in range(row + 1, row1 + 1):
                         if self.cell(i, col) != '  ':
-                            return False
-            if self.color == BLACK:
+                            if self.cell(row1, col1)[0] == 'w':
+                                return False
+                            else:
+                                self.field[row1][col1] = None
+
+            elif self.color == BLACK:
                 if row == row1:
                     for i in range(col1 + 1, col + 1):
                         if self.cell(row, i) != '  ':
-                            return False
+                            if self.cell(row1, col1)[0] == 'b':
+                                return False
+                            else:
+                                self.field[row1][col1] = None
                 if col == col1:
                     for i in range(row1 + 1, row + 1):
                         if self.cell(i, col) != '  ':
-                            return False
+                            if self.cell(row1, col1)[0] == 'b':
+                                return False
+                            else:
+                                self.field[row1][col1] = None
         self.field[row][col] = None  # Снять фигуру.
         self.field[row1][col1] = piece  # Поставить на новое место.
         piece.set_position(row1, col1)
