@@ -63,9 +63,46 @@ class Board:
         self.field = []
         for row in range(8):
             self.field.append([None] * 8)
-        # Пешка белого цвета в клетке E2.
+
+        # Белые пешки
+        self.field[1][0] = Pawn(1, 0, WHITE)
+        self.field[1][1] = Pawn(1, 1, WHITE)
+        self.field[1][2] = Pawn(1, 2, WHITE)
+        self.field[1][3] = Pawn(1, 3, WHITE)
         self.field[1][4] = Pawn(1, 4, WHITE)
-        self.field[2][5] = Knight(2, 5, BLACK)
+        self.field[1][5] = Pawn(1, 5, WHITE)
+        self.field[1][6] = Pawn(1, 6, WHITE)
+        self.field[1][7] = Pawn(1, 7, WHITE)
+
+        # Чёрные пешки
+        self.field[6][0] = Pawn(6, 0, BLACK)
+        self.field[6][1] = Pawn(6, 1, BLACK)
+        self.field[6][2] = Pawn(6, 2, BLACK)
+        self.field[6][3] = Pawn(6, 3, BLACK)
+        self.field[6][4] = Pawn(6, 4, BLACK)
+        self.field[6][5] = Pawn(6, 5, BLACK)
+        self.field[6][6] = Pawn(6, 6, BLACK)
+        self.field[6][7] = Pawn(6, 7, BLACK)
+
+        # Остальные белые фигуры
+        self.field[0][0] = Rook(0, 0, WHITE)
+        self.field[0][1] = Knight(0, 1, WHITE)
+        self.field[0][2] = Bishop(0, 2, WHITE)
+        self.field[0][3] = Queen(0, 3, WHITE)
+        self.field[0][4] = King(0, 4, WHITE)
+        self.field[0][5] = Bishop(0, 5, WHITE)
+        self.field[0][6] = Knight(0, 6, WHITE)
+        self.field[0][7] = Rook(0, 7, WHITE)
+
+        # Остальные чёрные фигуры фигуры
+        self.field[7][0] = Rook(7, 0, BLACK)
+        self.field[7][1] = Knight(7, 1, BLACK)
+        self.field[7][2] = Bishop(7, 2, BLACK)
+        self.field[7][3] = Queen(7, 3, BLACK)
+        self.field[7][4] = King(7, 4, BLACK)
+        self.field[7][5] = Bishop(7, 5, BLACK)
+        self.field[7][6] = Knight(7, 6, BLACK)
+        self.field[7][7] = Rook(7, 7, BLACK)
 
     def current_player_color(self):
         return self.color
@@ -85,7 +122,6 @@ class Board:
         """Переместить фигуру из точки (row, col) в точку (row1, col1).
         Если перемещение возможно, метод выполнит его и вернет True.
         Если нет --- вернет False"""
-
         if not correct_coords(row, col) or not correct_coords(row1, col1):
             return False
         if row == row1 and col == col1:
@@ -97,6 +133,25 @@ class Board:
             return False
         if not piece.can_move(row1, col1):
             return False
+        if self.cell(row, col) != f'{self.cell(row, col)[0]}N':
+            if self.color == WHITE:
+                if row == row1:
+                    for i in range(col + 1, col1 + 1):
+                        if self.cell(row, i) != '  ':
+                            return False
+                if col == col1:
+                    for i in range(row + 1, row1 + 1):
+                        if self.cell(i, col) != '  ':
+                            return False
+            if self.color == BLACK:
+                if row == row1:
+                    for i in range(col1 + 1, col + 1):
+                        if self.cell(row, i) != '  ':
+                            return False
+                if col == col1:
+                    for i in range(row1 + 1, row + 1):
+                        if self.cell(i, col) != '  ':
+                            return False
         self.field[row][col] = None  # Снять фигуру.
         self.field[row1][col1] = piece  # Поставить на новое место.
         piece.set_position(row1, col1)
@@ -106,7 +161,7 @@ class Board:
     def is_under_attack(self, row, col, color):
         for i in range(8):
             for j in range(8):
-                if self.field[i][j] == None:
+                if self.field[i][j] is None:
                     continue
                 else:
                     if self.field[i][j].get_color() == color:
@@ -189,8 +244,6 @@ class Knight(Pawn):
             if (abs(row - self.row) == 2 and abs(col - self.col) == 1) or \
                     (abs(row - self.row) == 1 and abs(col - self.col) == 2):
                 return True
-            else:
-                return False
         else:
             return False
 
@@ -208,3 +261,15 @@ class Bishop(Pawn):
 
     def char(self):
         return 'B'
+
+
+class King(Pawn):
+    def can_move(self, row, col):
+        if correct_coords(row, col):
+            if abs(row - self.row) == 1 and abs(col - self.col) == 1:
+                return True
+        else:
+            return False
+
+    def char(self):
+        return 'K'
