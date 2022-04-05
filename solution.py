@@ -133,7 +133,7 @@ class Board:
             return False
         if not piece.can_move(row1, col1):
             return False
-        if self.cell(row, col) != f'{self.cell(row, col)[0]}N':
+        if self.cell(row, col) == f'{self.cell(row, col)[0]}N':
             if self.color == WHITE:
                 if self.cell(row1, col1)[0] == 'w':
                     return False
