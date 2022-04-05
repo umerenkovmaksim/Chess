@@ -21,14 +21,17 @@ def main():
         else:
             print('Ход черных:')
         command = input()
-        if command == 'exit':
-            break
-        move_type, row, col, row1, col1 = command.split()
-        row, col, row1, col1 = int(row), int(col), int(row1), int(col1)
-        if board.move_piece(row, col, row1, col1):
-            print('Ход успешен')
-        else:
-            print('Координаты некорректы! Попробуйте другой ход!')
+        try:
+            if command == 'exit':
+                break
+            move_type, row, col, row1, col1 = command.split()
+            row, col, row1, col1 = int(row), int(col), int(row1), int(col1)
+            if board.move_piece(row, col, row1, col1):
+                print('Ход успешен')
+            else:
+                print('Координаты некорректы! Попробуйте другой ход!')
+        except ValueError:
+            print('Неверная команда')
 
 
 def print_board(board):  # Распечатать доску в текстовом виде (см. скриншот)
