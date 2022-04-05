@@ -135,6 +135,17 @@ class Board:
             return False
         if self.cell(row, col) != f'{self.cell(row, col)[0]}N':
             if self.color == WHITE:
+                if self.cell(row1, col1)[0] == 'w':
+                    return False
+                else:
+                    self.field[row1][col1] = None
+            elif self.color == BLACK:
+                if self.cell(row1, col1)[0] == 'b':
+                    return False
+                else:
+                    self.field[row1][col1] = None
+        else:
+            if self.color == WHITE:
                 if row == row1:
                     for i in range(col + 1, col1 + 1):
                         if self.cell(row, i) != '  ':
