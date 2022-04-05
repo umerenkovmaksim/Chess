@@ -68,24 +68,12 @@ class Board:
             self.field.append([None] * 8)
 
         # Белые пешки
-        self.field[1][0] = Pawn(1, 0, WHITE)
-        self.field[1][1] = Pawn(1, 1, WHITE)
-        self.field[1][2] = Pawn(1, 2, WHITE)
-        self.field[1][3] = Pawn(1, 3, WHITE)
-        self.field[1][4] = Pawn(1, 4, WHITE)
-        self.field[1][5] = Pawn(1, 5, WHITE)
-        self.field[1][6] = Pawn(1, 6, WHITE)
-        self.field[1][7] = Pawn(1, 7, WHITE)
+        for i in range(8):
+            self.field[1][i] = Pawn(1, i, WHITE)
 
         # Чёрные пешки
-        self.field[6][0] = Pawn(6, 0, BLACK)
-        self.field[6][1] = Pawn(6, 1, BLACK)
-        self.field[6][2] = Pawn(6, 2, BLACK)
-        self.field[6][3] = Pawn(6, 3, BLACK)
-        self.field[6][4] = Pawn(6, 4, BLACK)
-        self.field[6][5] = Pawn(6, 5, BLACK)
-        self.field[6][6] = Pawn(6, 6, BLACK)
-        self.field[6][7] = Pawn(6, 7, BLACK)
+        for i in range(8):
+            self.field[6][i] = Pawn(6, i, BLACK)
 
         # Остальные белые фигуры
         self.field[0][0] = Rook(0, 0, WHITE)
